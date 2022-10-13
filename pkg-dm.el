@@ -35,6 +35,7 @@
 (require 'package)
 
 (require 'msgu)
+(require 'prt)
 (require 'recentf-excl)
 
 (defgroup pkg-dm nil
