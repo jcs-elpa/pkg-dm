@@ -3,7 +3,7 @@
          "Package dependencies management")
 
 (website-url "https://github.com/jcs-elpa/pkg-dm")
-(keywords "tools")
+(keywords "maint")
 
 (package-file "pkg-dm.el")
 
@@ -12,5 +12,7 @@
 (source "melpa")
 
 (depends-on "emacs" "26.1")
+(depends-on "msgu")
+(depends-on "recentf-excl")
 
 (setq network-security-level 'low)  ; see https://github.com/jcs090218/setup-emacs-windows/issues/156#issuecomment-932956432
