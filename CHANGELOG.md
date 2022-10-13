@@ -8,7 +8,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## 0.1.1 (Unreleased)
 > Released N/A
 
-* N/A
+* Add dependency `elenv` (bab4ed7cf87e75770dbf947fbca6ec4ee375e287)
 
 ## 0.1.0
 > Released Oct 13, 2022
