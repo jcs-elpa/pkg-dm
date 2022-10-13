@@ -11,7 +11,7 @@
 (source "jcs-elpa")
 (source "melpa")
 
-(depends-on "emacs" "26.1")
+(depends-on "emacs" "28.1")
 (depends-on "msgu")
 (depends-on "prt")
 (depends-on "recentf-excl")
