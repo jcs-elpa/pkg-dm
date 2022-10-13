@@ -6,7 +6,7 @@
 ;; Maintainer: Shen, Jen-Chieh <jcs090218@gmail.com>
 ;; URL: https://github.com/jcs-elpa/pkg-dm
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "26.1") (msgu "0.1.0") (recentf-excl "0.1.0"))
+;; Package-Requires: ((emacs "26.1") (msgu "0.1.0") (prt "0.1.0") (recentf-excl "0.1.0"))
 ;; Keywords: maint
 
 ;; This file is not part of GNU Emacs.
