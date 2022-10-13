@@ -26,6 +26,7 @@
 
 (require 'cl-lib)
 
+(require 'elenv)
 (require 'msgu)
 (require 'prt)
 (require 'recentf-excl)
@@ -35,9 +36,6 @@
   "Temporary directory to mark packages so it can be deleted afterward."
   :type 'string
   :group 'pkg-dm)
-
-(defconst pkg-dm-windows-p (memq system-type '(cygwin windows-nt ms-dos))
-  "Is in Windows OS.")
 
 ;;
 ;; (@* "Externals" )
@@ -64,8 +62,8 @@
 (defun pkg-dm--move-path (path dest)
   "Move PATH to DEST."
   (ignore-errors (make-directory dest t))
-  (pkg-dm--shell-execute (if pkg-dm-windows-p "move" "mv")
-                         (unless pkg-dm-windows-p "-f")
+  (pkg-dm--shell-execute (if elenv-windows "move" "mv")
+                         (unless elenv-windows "-f")
                          (expand-file-name path) (expand-file-name dest)))
 
 (defun pkg-dm--package-dependency (pkg)

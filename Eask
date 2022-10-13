@@ -12,6 +12,7 @@
 (source "melpa")
 
 (depends-on "emacs" "28.1")
+(depends-on "elenv")
 (depends-on "msgu")
 (depends-on "prt")
 (depends-on "recentf-excl")
