@@ -262,5 +262,23 @@
   :lighter nil
   (if pkg-dm-mode (pkg-dm-mode--enable) (pkg-dm-mode--disable)))
 
+;;
+;; (@* "Core" )
+;;
+
+;;;###autoload
+(defun pkg-dm-doctor ()
+  "Check for matching package list."
+  (interactive)
+  (pkg-dm-rebuild-dependency-list)
+  ;; check for package that shouldn't be installed
+  (dolist (name package-selected-packages)
+    (unless (memq name pkg-dm-package-list)
+      (message "[?] Missing `%s` package, add it to `pkg-dm-package-list' or remove it" name)))
+  ;; check dependency or built-in
+  (dolist (name pkg-dm-package-list)
+    (unless (memq name package-selected-packages)
+      (message "[?] The package `%s` can be removed from the `pkg-dm-package-list'" name))))
+
 (provide 'pkg-dm-menu)
 ;;; pkg-dm-menu.el ends here
