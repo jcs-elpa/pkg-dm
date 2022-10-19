@@ -30,6 +30,7 @@
 (require 'msgu)
 (require 'prt)
 (require 'recentf-excl)
+(require 's)
 
 (defcustom pkg-dm-elpa-temp-dir
   (concat user-emacs-directory "elpa/.temp/")
