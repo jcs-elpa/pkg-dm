@@ -194,7 +194,7 @@
 (defun pkg-dm--menu-execute (fnc &rest args)
   "Execution around function `package-menu-execute' with FNC and ARGS."
   (let (pkg-dm--use-real-delete-p)
-    (when (apply fnc args) (pkg-dm-rebuild-dependency-list))))
+    (when (apply fnc args) (pkg-dm-doctor))))
 
 ;;;###autoload
 (defun pkg-dm-autoremove ()
@@ -208,7 +208,7 @@
         (mapc (lambda (p)
                 (package-delete (cadr (assq p package-alist)) t))
               removable)
-        (pkg-dm-rebuild-dependency-list))
+        (pkg-dm-doctor))
     (message "Nothing to autoremove")))
 
 ;;
