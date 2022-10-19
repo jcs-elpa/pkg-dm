@@ -38,6 +38,11 @@
   :type 'string
   :group 'pkg-dm)
 
+(defcustom pkg-dm-use-doctor nil
+  "If non-nil, we check for unmatched dependency."
+  :type 'boolean
+  :group 'pkg-dm)
+
 ;;
 ;; (@* "Externals" )
 ;;
@@ -151,6 +156,12 @@
           (package--save-selected-packages new-selected-pkg)
           (prt-done rt "Done rebuild dependency graph"))))))
 
+(defun pkg-dm--after-operations ()
+  "After made some operations in the package menu."
+  (if pkg-dm-use-doctor
+      (pkg-dm-doctor)
+    (pkg-dm-rebuild-dependency-list)))
+
 ;;
 ;; (@* "Deletion" )
 ;;
@@ -195,7 +206,7 @@
 (defun pkg-dm--menu-execute (fnc &rest args)
   "Execution around function `package-menu-execute' with FNC and ARGS."
   (let (pkg-dm--use-real-delete-p)
-    (when (apply fnc args) (pkg-dm-rebuild-dependency-list))))
+    (when (apply fnc args) (pkg-dm--after-operations))))
 
 ;;;###autoload
 (defun pkg-dm-autoremove ()
@@ -209,7 +220,7 @@
         (mapc (lambda (p)
                 (package-delete (cadr (assq p package-alist)) t))
               removable)
-        (pkg-dm-rebuild-dependency-list))
+        (pkg-dm--after-operations))
     (message "Nothing to autoremove")))
 
 ;;
