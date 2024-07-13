@@ -43,6 +43,11 @@
   :type 'boolean
   :group 'pkg-dm)
 
+(defcustom pkg-dm-no-upgrades nil
+  "List of packages will be ignored from the upgrade list."
+  :type 'list
+  :group 'pkg-dm)
+
 ;;
 ;; (@* "Externals" )
 ;;
@@ -55,22 +60,12 @@
 ;; (@* "Util" )
 ;;
 
-(defun pkg-dm--shell-execute (cmd &rest args)
-  "Return non-nil if CMD executed succesfully with ARGS."
-  (save-window-excursion
-    (msgu-silent
-      (= 0 (shell-command
-            (concat cmd " "
-                    (mapconcat #'shell-quote-argument
-                               (cl-remove-if #'s-blank-str-p args)
-                               " ")))))))
-
 (defun pkg-dm--move-path (path dest)
   "Move PATH to DEST."
   (ignore-errors (make-directory dest t))
-  (pkg-dm--shell-execute (if elenv-windows "move" "mv")
-                         (unless elenv-windows "-f")
-                         (expand-file-name path) (expand-file-name dest)))
+  (elenv-shell-execute (if elenv-windows "move" "mv")
+                       (unless elenv-windows "-f")
+                       (expand-file-name path) (expand-file-name dest)))
 
 (defun pkg-dm--package-dependency (pkg)
   "Return list of dependency from a PKG."
@@ -247,6 +242,13 @@
   "Advice around execute `package-install' command with FNC and ARGS."
   (let (auto-read-only-file-regexps) (recentf-excl-it (apply fnc args))))
 
+(defun pkg-dm--find-upgrades (fnc &rest args)
+  "Advice around execute `package-menu--find-upgrades' command with FNC and ARGS."
+  (let ((upgrades (apply fnc args)))
+    (seq-filter (lambda (item)
+                  (not (memq (car item) pkg-dm-no-upgrades)))
+                upgrades)))
+
 ;;
 ;; (@* "Entry" )
 ;;
@@ -257,14 +259,16 @@
   (advice-add 'package-menu-execute :around #'pkg-dm--menu-execute)
   (advice-add 'package-delete :around #'pkg-dm--package-delete)
   (advice-add 'package-install :around #'pkg-dm--package-install)
-  (advice-add 'package-install-from-buffer :around #'pkg-dm--package-install))
+  (advice-add 'package-install-from-buffer :around #'pkg-dm--package-install)
+  (advice-add 'package-menu--find-upgrades :around #'pkg-dm--find-upgrades))
 
 (defun pkg-dm-mode--disable ()
   "Disable `pkg-dm-mode'."
   (advice-remove 'package-menu-execute #'pkg-dm--menu-execute)
   (advice-remove 'package-delete #'pkg-dm--package-delete)
   (advice-remove 'package-install #'pkg-dm--package-install)
-  (advice-remove 'package-install-from-buffer #'pkg-dm--package-install))
+  (advice-remove 'package-install-from-buffer #'pkg-dm--package-install)
+  (advice-remove 'package-menu--find-upgrades #'pkg-dm--find-upgrades))
 
 ;;;###autoload
 (define-minor-mode pkg-dm-mode

@@ -39,8 +39,7 @@
   :group 'tool
   :link '(url-link :tag "Repository" "https://github.com/jcs-elpa/pkg-dm"))
 
-(defcustom pkg-dm-package-list
-  '()
+(defcustom pkg-dm-package-list nil
   "List of package you wish to install."
   :type 'list
   :group 'pkg-dm)
