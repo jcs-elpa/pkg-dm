@@ -227,7 +227,7 @@
   (advice-remove 'package-menu--mark-upgrades-1 #'pkg-dm--show-upgrades)
   (when (ignore-errors (package-menu-filter-upgradable))
     (package-menu-mark-upgrades)
-    (msgu-current "Press `x` to execute command; press `u` to unmark packages")))
+    (msgu-current "\n\nPress `x` to execute command; press `u` to unmark packages")))
 
 ;;;###autoload
 (defun pkg-dm-upgrade-all ()
