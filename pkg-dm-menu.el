@@ -294,7 +294,18 @@
   ;; check dependency or built-in
   (dolist (name pkg-dm-package-list)
     (unless (memq name package-selected-packages)
-      (message "[?] The package `%s` can be removed from the `pkg-dm-package-list'" name))))
+      (message "[?] The package `%s` can be removed from the `pkg-dm-package-list'" name)))
+  ;; check not installable packages
+  ;;
+  ;; This situation occurs when package(s) got removed from ELPA.
+  (let ((packages (mapcar #'car package-archive-contents))
+        (names (mapcar #'car package-alist)))
+    (dolist (name names)
+      (unless (memq name packages)
+        (message
+         (concat "[?] The package `%s` is no longer installable; consider remove "
+                 "the package")
+         name)))))
 
 (provide 'pkg-dm-menu)
 ;;; pkg-dm-menu.el ends here
