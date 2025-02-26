@@ -9,12 +9,12 @@
 
 ## 🔨 Usage
 
-* `pkg-dm-install-all`
-* `pkg-dm-upgrade-all`
-* `pkg-dm-autoremove`
-* `pkg-dm-rebuild-dependency-list`
-* `pkg-dm-cleanup`
-* `pkg-dm-doctor`
+- `pkg-dm-install-all`
+- `pkg-dm-upgrade-all`
+- `pkg-dm-autoremove`
+- `pkg-dm-rebuild-dependency-list`
+- `pkg-dm-cleanup`
+- `pkg-dm-doctor`
 
 ## 🛠️ Contribute
 
