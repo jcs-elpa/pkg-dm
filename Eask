@@ -1,3 +1,5 @@
+;; -*- mode: eask; lexical-binding: t -*-
+
 (package "pkg-dm"
          "0.1.0"
          "Package dependencies management")
