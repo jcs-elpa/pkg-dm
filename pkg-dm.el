@@ -60,13 +60,14 @@
     (unless package-archive-contents (package-refresh-contents))
     (package-install pkg)))
 
-(defun pkg-dm-ensure-install (packages)
-  "Assure every PACKAGES is installed."
-  (mapc #'pkg-dm-install packages)
-  ;; Rebuild after done the installation
-  (when package-archive-contents
-    (pkg-dm-rebuild-dependency-list)
-    (package-initialize)))
+(defun pkg-dm-ensure-install (pkgs)
+  "Assure every PKGS is installed."
+  (let ((gc-cons-threshold (default-value 'gc-cons-threshold)))
+    (mapc #'pkg-dm-install pkgs)
+    ;; Rebuild after done the installation
+    (when package-archive-contents
+      (pkg-dm-rebuild-dependency-list)
+      (package-initialize))))
 
 ;;;###autoload
 (defun pkg-dm-install-all ()
