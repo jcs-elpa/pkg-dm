@@ -45,7 +45,7 @@
 
 (defcustom pkg-dm-no-upgrades nil
   "List of packages will be ignored from the upgrade list."
-  :type 'list
+  :type '(list symbol)
   :group 'pkg-dm)
 
 ;;

@@ -41,7 +41,12 @@
 
 (defcustom pkg-dm-package-list nil
   "List of package you wish to install."
-  :type 'list
+  :type '(list symbol)
+  :group 'pkg-dm)
+
+(defcustom pkg-dm-gc-cons-threshold 800000
+  "The GC threshold while installing packages."
+  :type 'integer
   :group 'pkg-dm)
 
 ;;
@@ -62,7 +67,7 @@
 
 (defun pkg-dm-ensure-install (pkgs)
   "Assure every PKGS is installed."
-  (let ((gc-cons-threshold (default-value 'gc-cons-threshold)))
+  (let ((gc-cons-threshold pkg-dm-gc-cons-threshold))
     (mapc #'pkg-dm-install pkgs)
     ;; Rebuild after done the installation
     (when package-archive-contents
